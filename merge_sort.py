@@ -1,3 +1,8 @@
+import random
+import time
+import sys
+sys.setrecursionlimit(1000000)
+
 """
 MIT License
 
@@ -49,3 +54,14 @@ def merge(metade1,metade2):
     return resultado
 
 
+lista = []
+for i in range(0, 100):
+    lista.append(random.randint(0, 100))
+tempo1 = time.time()
+print(lista)
+merge_sort(lista)
+tempo2 = time.time()
+tempo = (tempo2 - tempo1) * 1000
+print(lista)
+
+print("Tempo: {} ms".format(tempo))

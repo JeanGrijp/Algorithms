@@ -99,7 +99,7 @@ class Arvore:
 
     def remover(self, chave):
         '''
-			3 casos
+			3 casos:
 
 			Caso 1
 			o nó a ser removido não tem filhos
