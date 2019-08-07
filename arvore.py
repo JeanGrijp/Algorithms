@@ -1,103 +1,103 @@
 class No:
-    def __init__(self, chave, valor, esquerda = None, direita = None):
-        self.chave = chave
-        self.valor = valor
-        self.esquerda = esquerda
-        self.direita = direita
+    def __init__(self, key, value, left = None, right = None):
+        self.key = key
+        self.value = value
+        self.left = left
+        self.right = right
 
 
-    def get_chave(self):
-        return self.chave
+    def get_key(self):
+        return self.key
 
-    def set_chave(self, chave):
-        self.chave = chave
-
-
-    def get_esquerda(self):
-        return self.esquerda
+    def set_key(self, key):
+        self.key = key
 
 
-    def set_esquerda(self, chave):
-        self.esquerda = chave
-
-    
-    def get_direita(self):
-        return self.direita
+    def get_left(self):
+        return self.left
 
 
-    def set_direita(self, chave):
-        self.direita = chave
+    def set_left(self, key):
+        self.left = key
 
     
-class Arvore:
+    def get_right(self):
+        return self.right
+
+
+    def set_right(self, key):
+        self.right = key
+
+    
+class Tree:
     def __init__(self):
-        self.raiz = None
-        self.tamanho = 0
+        self.root = None
+        self.size = 0
 
 
-    def get_raiz(self):
-        return self.raiz
-
-    
-    def set_raiz(self, chave):
-        self.raiz = chave
+    def get_root(self):
+        return self.root
 
     
-    def get_tamanho(self):
-        return self.tamanho
+    def set_root(self, key):
+        self.root = key
 
     
-    def set_tamanho(self, chave):
-        self.tamanho = chave
+    def get_size(self):
+        return self.size
+
+    
+    def set_size(self, key):
+        self.size = key
 
 
-    def inserir(self, chave, valor):
+    def insert(self, key, value):
         cont = True
-        no_atual = self.raiz
-        no_anterior = None
-        if type(chave) == int and type(valor) == str:
+        no_current = self.root
+        no_before = None
+        if type(key) == int and type(value) == str:
             while cont:
-                if no_atual is None: #arvore ta vazia
-                    self.raiz = No(chave, valor)
-                    self.tamanho += 1
+                if no_current is None: #arvore ta vazia
+                    self.root = No(key, value)
+                    self.size += 1
                     cont = False
-                elif chave < no_atual.chave:
-                    no_anterior = no_atual #só pra guardar a referência do No anterior
-                    no_atual = no_atual.esquerda# o No atual avança pra esquerda do no anterior
-                    if no_atual is None:# se True, é porque o valor que eu quero inserir é menor que o ultimo nó da arvore(folha)
-                        no_anterior.esquerda = No(chave, valor) #a importância de guardar a referencia anterior.
-                        self.tamanho += 1
+                elif key < no_current.key:
+                    no_before = no_current #só pra guardar a referência do No before
+                    no_current = no_current.left# o No atual avança pra left do no before
+                    if no_current is None:# se True, é porque o value que eu quero insert é menor que o ultimo nó da arvore(folha)
+                        no_before.left = No(key, value) #a importância de guardar a referencia before.
+                        self.size += 1
                         cont = False
-                elif chave > no_atual.chave:# aqui o valor que eu quero inserir é maior que o no atual
-                    no_anterior = no_atual
-                    no_atual = no_atual.direita
-                    if no_atual is None: #se True, o valor que é maior que a folha da arvore.
-                        no_anterior.direita = No(chave, valor)
-                        self.tamanho += 1
+                elif key > no_current.key:# aqui o value que eu quero insert é maior que o no current
+                    no_before = no_current
+                    no_current = no_current.right
+                    if no_current is None: #se True, o value que é maior que a folha da arvore.
+                        no_before.right = No(key, value)
+                        self.size += 1
                         cont = False
-                elif chave == no_atual.chave: # aqui é pra caso for igual, apenas substituir, outra opção era não fazer nada.
-                    no_atual = No(chave, valor)
-                    self.tamanho += 1
+                elif key == no_current.key: # aqui é pra caso for igual, apenas substituir, outra opção era não fazer nada.
+                    no_current = No(key, value)
+                    self.size += 1
                     cont = False
 
 
-    def buscar(self, chave):
-        no = self.raiz
+    def search(self, key):
+        no = self.root
         while no is not None:
-            if no.chave == chave:
-                return no.valor
-            elif chave > no.chave:
-                no = no.direita
+            if no.key == key:
+                return no.value
+            elif key > no.key:
+                no = no.right
             else:
-                no = no.esquerda
-        raise KeyError(chave)
+                no = no.left
+        raise KeyError(key)
 
 
     def __len__(self):
-        return self.tamanho
+        return self.size
 
 
-    def remover(self, chave):
+    def remove(self, key):
         '''
 			3 casos:
 
@@ -112,124 +112,124 @@ class Arvore:
 
 			Caso 3
 			o nó a ser removido possui dois filhos
-			basta pegar o menor elemento da subárvore à direita
+			basta pegar o menor elemento da subárvore à right
 		'''
-        chave = int(chave)
-        no_atual = self.raiz
-        no_anterior = None
-        while no_atual is not None:
+        key = int(key)
+        no_current = self.root
+        no_before = None
+        while no_current is not None:
             # verifica se encontrou o nó a ser removido
-            if no_atual.chave == chave:
+            if no_current.key == key:
                 # caso 1: o nó a ser removido não possui filhos (nó folha)
-                if no_atual.esquerda is None and no_atual.direita is None:
-                    # verifica se é a raiz
-                    if no_anterior is None:
-                        self.raiz = None
-                        self.tamanho -= 1
-                    # verifica se é filho à esquerda ou à direita
+                if no_current.left is None and no_current.right is None:
+                    # verifica se é a root
+                    if no_before is None:
+                        self.root = None
+                        self.size -= 1
+                    # verifica se é filho à left ou à right
                     else:
-                        if no_anterior.esquerda == no_atual:
-                            no_anterior.esquerda = None
-                            self.tamanho -= 1
+                        if no_before.left == no_current:
+                            no_before.left = None
+                            self.size -= 1
 
-                        elif no_anterior.direita == no_atual:
-                            no_anterior.direita = None
-                            self.tamanho -= 1
+                        elif no_before.right == no_current:
+                            no_before.right = None
+                            self.size -= 1
                 # caso 2: o nó a ser removido possui somente um filho
-                elif (no_atual.esquerda is None and no_atual.direita is not None) or (no_atual.esquerda is not None and no_atual.direita is None):
-                    # verifica se o nó a ser removido é a raiz
-                    if no_anterior is None:
-                        # verifica se o filho de no_atual é filho à esquerda
-                        if no_atual.esquerda is not None:
-                            self.raiz = no_atual.esquerda
-                            self.tamanho -= 1
-                        else: # senão o filho de no_atual é filho à direita
-                            self.raiz = no_atual.direita
-                            self.tamanho -= 1
+                elif (no_current.left is None and no_current.right is not None) or (no_current.left is not None and no_current.right is None):
+                    # verifica se o nó a ser removido é a root
+                    if no_before is None:
+                        # verifica se o filho de no_current é filho à left
+                        if no_current.left is not None:
+                            self.root = no_current.left
+                            self.size -= 1
+                        else: # senão o filho de no_current é filho à right
+                            self.root = no_current.right
+                            self.size -= 1
                     else:
-                        # verifica se o filho de no_atual é filho à esquerda
-                        if no_atual.esquerda is not None:
-                            # verifica se no_atual é filho à esquerda
-                            if  no_anterior.esquerda and no_anterior.esquerda.chave == no_atual.chave:
-                                no_anterior.esquerda = no_atual.esquerda
-                            else:# senão no_atual é filho à direita
-                                no_anterior.direita = no_atual.esquerda
-                        else:# senão o filho de no_atual é filho à direita
-                            # verifica se no_atual é filho à esquerda
-                            if no_anterior.esquerda and no_anterior.esquerda.chave == no_atual.chave:
-                                no_anterior.esquerda = no_atual.direita
-                            else:# senão no_atual é filho à direita
-                                no_anterior.direita = no_atual.direita
+                        # verifica se o filho de no_current é filho à left
+                        if no_current.left is not None:
+                            # verifica se no_current é filho à left
+                            if  no_before.left and no_before.left.key == no_current.key:
+                                no_before.left = no_current.left
+                            else:# senão no_current é filho à right
+                                no_before.right = no_current.left
+                        else:# senão o filho de no_current é filho à right
+                            # verifica se no_current é filho à left
+                            if no_before.left and no_before.left.key == no_current.key:
+                                no_before.left = no_current.right
+                            else:# senão no_current é filho à right
+                                no_before.right = no_current.right
                     
                 # caso 3: o nó a ser removido possui dois filhos
-                # pega-se o menor elemento da subárvore à direita
-                elif no_atual.esquerda is not None and no_atual.direita is not None:
+                # pega-se o menor elemento da subárvore à right
+                elif no_current.left is not None and no_current.right is not None:
                     
-                    menor_no_anterior = no_atual
-                    menor_no = no_atual.direita
-                    proximo_menor = no_atual.direita.esquerda
+                    menor_no_before = no_current
+                    menor_no = no_current.right
+                    proximo_menor = no_current.right.left
                     
                     while proximo_menor is not None:
-                        menor_no_anterior = menor_no
+                        menor_no_before = menor_no
                         menor_no = proximo_menor
-                        proximo_menor = menor_no.esquerda
-                    # verifica se o nó a ser removido é a raiz
-                    if no_anterior is None:
-                        # Caso especial: o nó que vai ser a nova raiz é filho da raiz
-                        if self.raiz.direita.chave == menor_no.chave:
-                            menor_no.esquerda = self.raiz.esquerda
+                        proximo_menor = menor_no.left
+                    # verifica se o nó a ser removido é a root
+                    if no_before is None:
+                        # Caso especial: o nó que vai ser a nova root é filho da root
+                        if self.root.right.key == menor_no.key:
+                            menor_no.left = self.root.left
                         else:
                             '''
-								verifica se o menor_no é filho à esquerda ou à direita
+								verifica se o menor_no é filho à left ou à right
 								para setar para None o menor_no
 							'''
-                            if menor_no_anterior.esquerda.chave == menor_no.chave:
-                                menor_no_anterior.esquerda = None
+                            if menor_no_before.left.key == menor_no.key:
+                                menor_no_before.left = None
                             else:
-                                menor_no_anterior.direita = None
-                            # seta os filhos à direita e esquerda de menor_no
-                            menor_no.esquerda = no_atual.esquerda
-                            menor_no.direita = no_atual.direita
-                        # faz com que o menor_no seja a raiz
-                        self.raiz = menor_no
+                                menor_no_before.right = None
+                            # seta os filhos à right e left de menor_no
+                            menor_no.left = no_current.left
+                            menor_no.right = no_current.right
+                        # faz com que o menor_no seja a root
+                        self.root = menor_no
                     else:
                         '''
-							verifica se no_atual é filho à esquerda ou à direita
-							para setar o menor_no como filho do pai do no_atual (no_anterior)
+							verifica se no_current é filho à left ou à right
+							para setar o menor_no como filho do pai do no_current (no_before)
 						'''
-                        if no_anterior.esquerda.chave == no_atual.chave:
-                            no_anterior.esquerda = menor_no
+                        if no_before.left.key == no_current.key:
+                            no_before.left = menor_no
                         else:
-                            no_anterior.direita = menor_no
+                            no_before.right = menor_no
                         '''
-							verifica se o menor_no é filho à esquerda ou à direita
+							verifica se o menor_no é filho à left ou à right
 							para setar para None o menor_no
 						'''
-                        if menor_no_anterior.esquerda.chave == menor_no.chave:
-                            menor_no_anterior.esquerda = None
+                        if menor_no_before.left.key == menor_no.key:
+                            menor_no_before.left = None
                         else:
-                            menor_no_anterior.direita = None
+                            menor_no_before.right = None
 
-						# seta os filhos à direita e esquerda de menor_no
-                        menor_no.esquerda = no_atual.esquerda
-                        menor_no.direita = no_atual.direita
+						# seta os filhos à right e left de menor_no
+                        menor_no.left = no_current.left
+                        menor_no.right = no_current.right
                 break 
-            no_anterior = no_atual
+            no_before = no_current
 
-            # verifica se vai para esquerda ou direita
-            if chave < no_atual.chave:
-                no_atual = no_atual.esquerda
+            # verifica se vai para left ou right
+            if key < no_current.key:
+                no_current = no_current.left
             else:
-                no_atual = no_atual.direita
-        return no_atual.valor
+                no_current = no_current.right
+        return no_current.value
 
 
     def pre_ordem(self, no):
         if no is None:
             return
-        a = "{}:'{}'".format(no.chave, no.valor)
-        b = self.pre_ordem(no.esquerda)
-        c = self.pre_ordem(no.direita)
+        a = "{}:'{}'".format(no.key, no.value)
+        b = self.pre_ordem(no.left)
+        c = self.pre_ordem(no.right)
         final_string = a
         if b != None:
             final_string += "->" + str(b) 
@@ -240,9 +240,9 @@ class Arvore:
     def ordem(self, no):
         if no is None:
             return
-        b = self.ordem(no.esquerda)
-        a = "{}:'{}'".format(no.chave, no.valor)
-        c = self.ordem(no.direita)
+        b = self.ordem(no.left)
+        a = "{}:'{}'".format(no.key, no.value)
+        c = self.ordem(no.right)
         final_string = a
         if b != None:
             final_string += "->" + str(b) 
@@ -254,9 +254,9 @@ class Arvore:
     def pos_ordem(self, no):
         if no is None:
             return
-        b = self.ordem(no.esquerda)
-        c = self.ordem(no.direita)
-        a = "{}:'{}'".format(no.chave, no.valor)
+        b = self.ordem(no.left)
+        c = self.ordem(no.right)
+        a = "{}:'{}'".format(no.key, no.value)
         final_string = a
         if b != None:
             final_string += "->" + str(b) 
