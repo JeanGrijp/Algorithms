@@ -6,50 +6,10 @@ class No:
         self.right = right
 
 
-    def get_key(self):
-        return self.key
-
-    def set_key(self, key):
-        self.key = key
-
-
-    def get_left(self):
-        return self.left
-
-
-    def set_left(self, key):
-        self.left = key
-
-    
-    def get_right(self):
-        return self.right
-
-
-    def set_right(self, key):
-        self.right = key
-
-    
 class Tree:
     def __init__(self):
         self.root = None
         self.size = 0
-
-
-    def get_root(self):
-        return self.root
-
-    
-    def set_root(self, key):
-        self.root = key
-
-    
-    def get_size(self):
-        return self.size
-
-    
-    def set_size(self, key):
-        self.size = key
-
 
     def insert(self, key, value):
         cont = True
@@ -99,20 +59,20 @@ class Tree:
 
     def remove(self, key):
         '''
-			3 casos:
+        3 casos:
 
-			Caso 1
-			o nó a ser removido não tem filhos
-			esse caso é simples, basta setar a ligação
-			do pai para None
+        Caso 1
+        o nó a ser removido não tem filhos
+        esse caso é simples, basta setar a ligação
+        do pai para None
 
-			Caso 2
-			o nó a ser removido tem somente 1 filho
-			basta colocar o seu filho no lugar dele
+        Caso 2
+        o nó a ser removido tem somente 1 filho
+        basta colocar o seu filho no lugar dele
 
-			Caso 3
-			o nó a ser removido possui dois filhos
-			basta pegar o menor elemento da subárvore à right
+        Caso 3
+        o nó a ser removido possui dois filhos
+        basta pegar o menor elemento da subárvore à right
 		'''
         key = int(key)
         no_current = self.root
@@ -162,8 +122,8 @@ class Tree:
                                 no_before.right = no_current.right
                     
                 # caso 3: o nó a ser removido possui dois filhos
-                # pega-se o menor elemento da subárvore à right
-                elif no_current.left is not None and no_current.right is not None:
+                # pega-se o menor elemento da subárvore à direita
+                elif (no_current.left is not None) and (no_current.right is not None):
                     
                     menor_no_before = no_current
                     menor_no = no_current.right
