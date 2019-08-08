@@ -31,35 +31,38 @@ class No:
 
 class Queue:
     def __init__(self):
-        self.first = No(None) #o primiero objeto é um sentinela, ele não conta como objeto inserido, a fila inicia com o sentinela para ter a noção do inicio e o fim da fila 
+        # o primiero objeto é um sentinela, ele não conta como objeto inserido, a fila inicia com o sentinela para ter a noção do inicio e o fim da fila
+        self.first = No(None)
 
-    
     def insert(self, value):
-        if self.first.value is None: #verifica se a fila está vazia, caso esteja, o primeiro elemento da fila será o value.
+        # verifica se a fila está vazia, caso esteja, o primeiro elemento da fila será o value.
+        if self.first.value is None:
             self.first = No(value)
-        else:#caso não esteja vazia
-            aux = self.first #cria-se uma variavel auxiliar para percorrer a fila e encontrar o final da fila.
-            while aux.next is not None: #enquanto não encontrar o ultimo elemento, o while faz com que a variavel aux seja o next elemento da fila
+        else:  # caso não esteja vazia
+            # cria-se uma variavel auxiliar para percorrer a fila e encontrar o final da fila.
+            aux = self.first
+            while aux.next is not None:  # enquanto não encontrar o ultimo elemento, o while faz com que a variavel aux seja o next elemento da fila
                 aux = aux.next
-            aux.next = No(value) #quando chegar no ultimo elemento, sai do while e o value é inserido ao final da fila.
-
+            # quando chegar no ultimo elemento, sai do while e o value é inserido ao final da fila.
+            aux.next = No(value)
 
     def remove(self):
-        if self.first.value is None: #verifica se a fila está vazia
+        if self.first.value is None:  # verifica se a fila está vazia
             return None
         else:
-            aux = self.first #cria-se uma variavel auxiliar
-            if self.first.next is None: #verifica se a fila tem apenas um elemento
-                self.first = No(None) #se tiver apenas um elemento, a fila volta a ficar vazia.
+            aux = self.first  # cria-se uma variavel auxiliar
+            if self.first.next is None:  # verifica se a fila tem apenas um elemento
+                # se tiver apenas um elemento, a fila volta a ficar vazia.
+                self.first = No(None)
             else:
-                self.first = aux.next #caso tenha mais de um elemento, é removido o primeiro elemento.
+                # caso tenha mais de um elemento, é removido o primeiro elemento.
+                self.first = aux.next
 
-    
     def show(self):
-        if self.first.value is None: #verifica se a fila está vazia
+        if self.first.value is None:  # verifica se a fila está vazia
             print("Fila vazia")
         else:
-            aux = self.first #cria-se a variavel auxiliar
-            while aux.next is not None: #o while faz printar os valuees dos objetos inseridos na fila
+            aux = self.first  # cria-se a variavel auxiliar
+            while aux.next is not None:  # o while faz printar os valuees dos objetos inseridos na fila
                 print(aux.value)
-                aux = aux.next #enquanto tiver objetos a serem mostrados, aux cntinuará a receber os proximos objetos
+                aux = aux.next  # enquanto tiver objetos a serem mostrados, aux cntinuará a receber os proximos objetos
