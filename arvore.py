@@ -1,5 +1,5 @@
 class No:
-    def __init__(self, key, value, left = None, right = None):
+    def __init__(self, key, value, left=None, right=None):
         self.key = key
         self.value = value
         self.left = left
@@ -17,12 +17,13 @@ class Tree:
         no_before = None
         if type(key) == int and type(value) == str:
             while cont:
-                if no_current is None: #arvore ta vazia
+                if no_current is None:
+                    # arvore ta vazia
                     self.root = No(key, value)
                     self.size += 1
                     cont = False
                 elif key < no_current.key:
-                    no_before = no_current #só pra guardar a referência do No before
+                    no_before = no_current  #só pra guardar a referência do No before
                     no_current = no_current.left# o No atual avança pra left do no before
                     if no_current is None:# se True, é porque o value que eu quero insert é menor que o ultimo nó da arvore(folha)
                         no_before.left = No(key, value) #a importância de guardar a referencia before.
