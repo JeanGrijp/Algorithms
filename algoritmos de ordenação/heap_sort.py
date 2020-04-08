@@ -1,6 +1,3 @@
-import random
-import time
-
 def heap_sort(data):
     tamanho = len(data)
     indice = int(tamanho/2)
@@ -30,11 +27,11 @@ def heap_sort(data):
                 break
         data[pai] = temp
 
+
 lista = []
-for i in range(1000, 0, -1):
+for i in range(10, 0, -1):
     lista.append(i)
-tempo1 = time.time_ns()
+
 heap_sort(lista)
-tempo2 = time.time_ns()
-tempo = (tempo2 - tempo1) / 1000000
-print("Tempo: %i ms"%tempo)
+
+print(lista)
