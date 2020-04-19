@@ -98,7 +98,7 @@ class Grafo:
     def arvore_geradora_minima(self, num):
         print("Iniciou")
         arvore = []
-        font = self.busca_vertice(num)
+        font = busca_vertice(num)
         if font is None:
             print("Vertice não encontrado")
             return

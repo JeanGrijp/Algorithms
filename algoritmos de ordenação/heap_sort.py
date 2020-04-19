@@ -1,4 +1,5 @@
 def heap_sort(data):
+    print(x)
     tamanho = len(data)
     indice = int(tamanho/2)
     pai = 0
@@ -31,7 +32,7 @@ def heap_sort(data):
 lista = []
 for i in range(10, 0, -1):
     lista.append(i)
-
+x = 2
 heap_sort(lista)
 
 print(lista)

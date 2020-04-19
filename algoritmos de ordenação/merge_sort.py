@@ -1,9 +1,3 @@
-import random
-import time
-import sys
-sys.setrecursionlimit(1000000) #aumenta o valor da pilha recursiva na memoria.
-
-
 def merge_sort(x):
     if len(x) == 0 or len(x) == 1: #verifica se a lista está vazia ou se tem apenas um elemento
         return x #caso sim, a lista já está ordenada.
@@ -29,12 +23,3 @@ def merge(metade1,metade2):
         resultado += metade1
     return resultado
 
-
-lista = []
-for i in range(1000, 0, -1):
-    lista.append(i)
-tempo1 = time.time_ns()
-merge_sort(lista)
-tempo2 = time.time_ns()
-tempo = (tempo2 - tempo1) / 1000000
-print("Tempo: %i ms"%tempo)
