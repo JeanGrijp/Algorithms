@@ -13,10 +13,38 @@ def takeSpace(string):
 
 def verify (string):
     text = takeSpace(string)
+    if text[0] == "}" or text[-1] == "{":
+        return "N"
     aux1 = "{"
     aux2 = "}"
     num1 = 0
     num2 = 0
+    for i in text:
+        if num2 > num1:
+            return "N"
+        if i == aux1:
+            num1 += 1
+        elif i == aux2:
+            num2 += 1
+        else:
+            return "N"
+    if (num1 - num2) == 0:
+        return "S"
+    else:
+        return "N"
+
+    """
+    if text[0] == "}" or text[-1] == "{":
+        return "N"
+    aux1 = "{"
+    aux2 = "}"
+    num1 = 0
+    num2 = 0
+    if len(text) == 2:
+        if (text[0] == aux2) and (text[1] == aux1):
+            return "N"
+        else:
+            return "S"
     for i in text:
         if i == aux1:
             num1 += 1
@@ -28,6 +56,7 @@ def verify (string):
         return "S"
     else:
         return "N"
+    """
 
 
 def menu ():
@@ -54,16 +83,8 @@ d = "{ } {"
 e = "{ { } } { } }"
 f = "{ } { } }"
 
+asd = "{ } { }"
+
 errado = "{ { } } { { { } }"
 
-print(verify(certo))
-print(verify(a))
-print(verify(b))
-print(verify(c))
-print()
-print()
-print()
-print(verify(d))
-print(verify(e))
-print(verify(f))
-print(verify(errado))
+print(verify(asd+asd+asd+asd+asd))
