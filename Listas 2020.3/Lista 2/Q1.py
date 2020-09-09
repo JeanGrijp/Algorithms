@@ -4,6 +4,7 @@ class No:
         self.value = value
         self.left = left
         self.right = right
+        self.depth = 0
 
 
 class Tree:
@@ -28,31 +29,29 @@ class Tree:
                     no_before = no_current
                     no_current = no_current.left
                     if no_current is None:
-                        no_before.left = No(key, value) 
+                        no_before.left = No(key, value)
                         self.size += 1
                         cont = False
-                elif key > no_current.key:
+                elif key >= no_current.key:
                     no_before = no_current
                     no_current = no_current.right
                     if no_current is None: 
                         no_before.right = No(key, value)
                         self.size += 1
                         cont = False
-                elif key == no_current.key:
-                    no_current = No(key, value)
-                    self.size += 1
-                    cont = False
 
     def search(self, key):
         no = self.root
+        depth = 0
         while no is not None:
             if no.key == key:
-                return no.value
+                return no.value, depth
             elif key > no.key:
                 no = no.right
+                depth += 1
             else:
                 no = no.left
-        raise KeyError(key)
+                depth += 1
 
     def remove(self, key):
         key = int(key)
@@ -128,42 +127,3 @@ class Tree:
                 no_current = no_current.right
         return no_current.value
 
-    def pre_ordem(self, no):
-        if no is None:
-            return
-        a = "{}:'{}'".format(no.key, no.value)
-        b = self.pre_ordem(no.left)
-        c = self.pre_ordem(no.right)
-        final_string = a
-        if b != None:
-            final_string += "->" + str(b) 
-        if c != None:
-            final_string += "->" + str(c)
-        return final_string
-
-    def ordem(self, no):
-        if no is None:
-            return
-        b = self.ordem(no.left)
-        a = "{}:'{}'".format(no.key, no.value)
-        c = self.ordem(no.right)
-        final_string = a
-        if b != None:
-            final_string += "->" + str(b) 
-        if c != None:
-            final_string += "->" + str(c)
-        return final_string
-
-
-    def pos_ordem(self, no):
-        if no is None:
-            return
-        b = self.ordem(no.left)
-        c = self.ordem(no.right)
-        a = "{}:'{}'".format(no.key, no.value)
-        final_string = a
-        if b != None:
-            final_string += "->" + str(b) 
-        if c != None:
-            final_string += "->" + str(c)
-        return final_string
