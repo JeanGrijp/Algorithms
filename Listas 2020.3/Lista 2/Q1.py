@@ -163,7 +163,7 @@ class BinarySearchTree:
                     # verifica se o nó a ser removido é a root
                     if no_before is None:
                         # Caso especial: o nó que vai ser a nova root é filho da root
-                        if self.root.right == menor_no:
+                        if self.root.right.key == menor_no.key:
                             print(self.search(no_current)[1])
                             menor_no.left = self.root.left
                         else:
@@ -172,8 +172,10 @@ class BinarySearchTree:
 								para setar para None o menor_no
 							'''
                             if menor_no_before.left.key == menor_no.key:
+                                print(self.search(no_current)[1])
                                 menor_no_before.left = None
                             else:
+                                print(self.search(no_current)[1])
                                 menor_no_before.right = None
                             # seta os filhos à right e left de menor_no
                             menor_no.left = no_current.left
