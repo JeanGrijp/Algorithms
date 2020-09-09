@@ -11,6 +11,8 @@ class Tree:
         self.root = None
         self.size = 0
 
+    def __len__(self):
+        return self.size
 
     def insert(self, key, value):
         cont = True
@@ -41,7 +43,6 @@ class Tree:
                     self.size += 1
                     cont = False
 
-
     def search(self, key):
         no = self.root
         while no is not None:
@@ -52,11 +53,6 @@ class Tree:
             else:
                 no = no.left
         raise KeyError(key)
-
-
-    def __len__(self):
-        return self.size
-
 
     def remove(self, key):
         key = int(key)
@@ -84,82 +80,53 @@ class Tree:
                             self.root = no_current.right
                             self.size -= 1
                     else:
-                        # verifica se o filho de no_current é filho à left
                         if no_current.left is not None:
-                            # verifica se no_current é filho à left
                             if  no_before.left and no_before.left.key == no_current.key:
                                 no_before.left = no_current.left
-                            else:# senão no_current é filho à right
+                            else:
                                 no_before.right = no_current.left
-                        else:# senão o filho de no_current é filho à right
-                            # verifica se no_current é filho à left
+                        else:
                             if no_before.left and no_before.left.key == no_current.key:
                                 no_before.left = no_current.right
-                            else:# senão no_current é filho à right
+                            else:
                                 no_before.right = no_current.right
-                    
-                # caso 3: o nó a ser removido possui dois filhos
-                # pega-se o menor elemento da subárvore à direita
                 elif (no_current.left is not None) and (no_current.right is not None):
-                    
                     menor_no_before = no_current
                     menor_no = no_current.right
                     proximo_menor = no_current.right.left
-                    
                     while proximo_menor is not None:
                         menor_no_before = menor_no
                         menor_no = proximo_menor
                         proximo_menor = menor_no.left
-                    # verifica se o nó a ser removido é a root
                     if no_before is None:
-                        # Caso especial: o nó que vai ser a nova root é filho da root
                         if self.root.right.key == menor_no.key:
                             menor_no.left = self.root.left
                         else:
-                            '''
-								verifica se o menor_no é filho à left ou à right
-								para setar para None o menor_no
-							'''
                             if menor_no_before.left.key == menor_no.key:
                                 menor_no_before.left = None
                             else:
                                 menor_no_before.right = None
-                            # seta os filhos à right e left de menor_no
                             menor_no.left = no_current.left
                             menor_no.right = no_current.right
-                        # faz com que o menor_no seja a root
                         self.root = menor_no
                     else:
-                        '''
-							verifica se no_current é filho à left ou à right
-							para setar o menor_no como filho do pai do no_current (no_before)
-						'''
                         if no_before.left.key == no_current.key:
                             no_before.left = menor_no
                         else:
                             no_before.right = menor_no
-                        '''
-							verifica se o menor_no é filho à left ou à right
-							para setar para None o menor_no
-						'''
                         if menor_no_before.left.key == menor_no.key:
                             menor_no_before.left = None
                         else:
                             menor_no_before.right = None
-
-						# seta os filhos à right e left de menor_no
                         menor_no.left = no_current.left
                         menor_no.right = no_current.right
                 break 
             no_before = no_current
-
-            # verifica se vai para left ou right
             if key < no_current.key:
                 no_current = no_current.left
             else:
                 no_current = no_current.right
         return no_current.value
-
 
     def pre_ordem(self, no):
         if no is None:
