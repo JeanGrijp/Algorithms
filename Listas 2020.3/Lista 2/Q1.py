@@ -27,6 +27,7 @@ class BinarySearchTree:
             else:
                 no = no.left
                 depth += 1
+        return -1
 
     def insert(self, key, value):
         cont = True
@@ -44,6 +45,7 @@ class BinarySearchTree:
                     no_current = no_current.left
                     if no_current is None:
                         no_before.left = No(key, value)
+                        print(self.search(key)[1])
                         self.size += 1
                         cont = False
                 elif key >= no_current.key:
@@ -51,6 +53,7 @@ class BinarySearchTree:
                     no_current = no_current.right
                     if no_current is None: 
                         no_before.right = No(key, value)
+                        print(self.search(key)[1])
                         self.size += 1
                         cont = False
 
@@ -87,15 +90,18 @@ class BinarySearchTree:
                 if no_current.left is None and no_current.right is None:
                     # verifica se é a root
                     if no_before is None:
+                        print(-1)
                         self.root = None
-                        self.size -= 1
+                        self.size = 0
                     else:
                         # verifica se é filho à left ou à right
                         if no_before.left == no_current:
+                            print(self.search(no_current)[1])
                             no_before.left = None
                             self.size -= 1
 
                         elif no_before.right == no_current:
+                            print(self.search(no_current)[1])
                             no_before.right = None
                             self.size -= 1
 
@@ -110,24 +116,31 @@ class BinarySearchTree:
                     if no_before is None:
                         # verifica se o filho de no_current é filho à left
                         if no_current.left is not None:
+                            print(self.search(no_current)[1])
                             self.root = no_current.left
                             self.size -= 1
-                        else: # senão o filho de no_current é filho à right
+                        else:
+                             # senão o filho de no_current é filho à right
+                            print(self.search(no_current)[1])
                             self.root = no_current.right
                             self.size -= 1
                     else:
                         # verifica se o filho de no_current é filho à left
                         if no_current.left is not None:
-                            # verifica se no_current é filho à left
-                            if no_before.left.key == no_current.key:
+                            # verifica se no_current é filho à left de no_before
+                            if no_before.left == no_current:
+                                print(self.search(no_current)[1])
                                 no_before.left = no_current.left
                             else:# senão no_current é filho à right
+                                print(self.search(no_current)[1])
                                 no_before.right = no_current.left
                         else:# senão o filho de no_current é filho à right
                             # verifica se no_current é filho à left
-                            if no_before.left and no_before.left.key == no_current.key:
+                            if no_before.left == no_current:
+                                print(self.search(no_current)[1])
                                 no_before.left = no_current.right
                             else:# senão no_current é filho à right
+                                print(self.search(no_current)[1])
                                 no_before.right = no_current.right
 
 
@@ -150,7 +163,8 @@ class BinarySearchTree:
                     # verifica se o nó a ser removido é a root
                     if no_before is None:
                         # Caso especial: o nó que vai ser a nova root é filho da root
-                        if self.root.right.key == menor_no.key:
+                        if self.root.right == menor_no:
+                            print(self.search(no_current)[1])
                             menor_no.left = self.root.left
                         else:
                             '''
