@@ -15,19 +15,6 @@ class BinarySearchTree:
     def __len__(self):
         return self.size
 
-    def search(self, key):
-        no = self.root
-        depth = 0
-        while no is not None:
-            if no.key == key:
-                return no.value, depth
-            elif key > no.key:
-                no = no.right
-                depth += 1
-            else:
-                no = no.left
-                depth += 1
-        return -1
 
     def insert(self, key, value):
         cont = True
@@ -53,9 +40,23 @@ class BinarySearchTree:
                     no_current = no_current.right
                     if no_current is None: 
                         no_before.right = No(key, value)
-                        print(self.search(key)[1])
+                        print(self.search(no_current)[1])
                         self.size += 1
                         cont = False
+
+    def search(self, key):
+        no = self.root
+        depth = 0
+        while no is not None:
+            if no.key == key:
+                return no.key, depth
+            elif no.key > key:
+                no = no.right
+                depth += 1
+            else:
+                no = no.left
+                depth += 1
+        return -1
 
     def remove(self, key):
         '''
@@ -188,16 +189,20 @@ class BinarySearchTree:
 							para setar o menor_no como filho do pai do no_current (no_before)
 						'''
                         if no_before.left.key == no_current.key:
+                            print(self.search(no_current)[1])
                             no_before.left = menor_no
                         else:
+                            print(self.search(no_current)[1])
                             no_before.right = menor_no
                         '''
 							verifica se o menor_no é filho à left ou à right
 							para setar para None o menor_no
 						'''
                         if menor_no_before.left.key == menor_no.key:
+                            print(self.search(no_current)[1])
                             menor_no_before.left = None
                         else:
+                            print(self.search(no_current)[1])
                             menor_no_before.right = None
 
 						# seta os filhos à right e left de menor_no
@@ -220,10 +225,17 @@ aux = inp[1].split(" ")
 
 
 arvore = BinarySearchTree()
-arvore.insert(8, 8)
-arvore.insert(7, 7)
-arvore.insert(16, 16)
-arvore.insert(5, 5)
-arvore.insert(9, 9)
-arvore.insert(17, 17)
-arvore.search(16)
+arvore.insert(8, "8")
+arvore.insert(7, "7")
+arvore.insert(16, "16")
+arvore.insert(5, "5")
+arvore.insert(9, "9")
+arvore.insert(17, "17")
+arvore.insert(90, "90")
+arvore.insert(900, "900")
+print()
+print(arvore.search(900))
+print()
+arvore.remove(5)
+
+
