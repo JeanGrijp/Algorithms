@@ -75,9 +75,9 @@ class BinarySearchTree:
 
     def search(self, key):
         no = self.root
-        depth = 0
+        depth = 1
         while no is not None:
-            if (no.key == key) and no == self.root:
+            if (no.key == key) and no is self.root:
                 return 1
             if no.key == key:
                 return depth
@@ -199,49 +199,55 @@ class BinarySearchTree:
 
 inp = ["", "46 10 2 12 90 91 45 100 56 87 85 14 21 22 23"] #30 20 40 128 374 253 128 34 451 194 448 919 527 451"]
 
-comands = ['INS 128', 'INS 374', 'INS 253', 'INS 128', 'INS 34', 'INS 451', 'INS 194', 'INS 448', 'INS 919', 'INS 527', 'DEL 451']
+comands = ['INS 71', 'DEL 90', 'SCH 100']
 
 
 
 aux = inp[1].split(" ")
+print(aux)
 
-lista = comands
 
 arvore = BinarySearchTree()
 
 for i in aux:
-    arvore.insert(int(i), i)
-
-maior = 0
-for i in aux:
-    num = arvore.search(int(i))
-    if maior < num:
-        maior = num
-print(maior+1)
-
-# arvore.remove(22)
-print(arvore.search(22))
-maior = 0
-for i in aux:
-    num = arvore.search(int(i))
-    if maior < num:
-        maior = num
-print(maior+1)
+    
+    arvore.insert(int(i), i[4::])
+    # if i == "100":
+    #     print(arvore.search(int(i)))
 
 
+# print((arvore.search(int(comands[2][4::]))))
 
-# i = comands[3]
-# print((arvore.search(int(i[4::]))))
+for i in comands:
+    if i[:3:] == "SCH":
+        i = i.split(" ")
+        print(arvore.search(int(i[1])))
+    elif i[:3:] == "INS":
+        arvore.insertAndPrint(int(i[4::]), i[4::])
+        # print((arvore.search(int(i[4::]))))
+    elif i[:3:] == "DEL":
+        print((arvore.search(int(i[4::]))))
+        arvore.remove(int(i[4::]))
 
-# for i in lista:
-#     if i[:3:] == "SCH":
-#         print((arvore.search(int(i[4::]))))
-#     elif i[:3:] == "INS":
-#         arvore.insertAndPrint(int(i[4::]), i)
-#         # print((arvore.search(int(i[4::]))))
-#     elif i[:3:] == "DEL":
-#         print((arvore.search(int(i[4::]))))
-#         arvore.remove(int(i[4::]))
+# maior = 0
+# for i in aux:
+#     num = arvore.search(int(i))
+#     if maior < num:
+#         maior = num
+# print(maior)
+
+# # arvore.remove(22)
+# print(arvore.search(22))
+# maior = 0
+# for i in aux:
+#     num = arvore.search(int(i))
+#     if maior < num:
+#         maior = num
+# print(maior)
+
+
+
+
 
 
 # maior = 0
