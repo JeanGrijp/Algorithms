@@ -204,7 +204,7 @@ comands = ['INS 71', 'DEL 90', 'SCH 100']
 
 
 aux = inp[1].split(" ")
-print(aux)
+# print(aux)
 
 
 arvore = BinarySearchTree()
@@ -216,18 +216,18 @@ for i in aux:
     #     print(arvore.search(int(i)))
 
 
-# print((arvore.search(int(comands[2][4::]))))
 
-for i in comands:
-    if i[:3:] == "SCH":
-        i = i.split(" ")
-        print(arvore.search(int(i[1])))
-    elif i[:3:] == "INS":
-        arvore.insertAndPrint(int(i[4::]), i[4::])
+# print(arvore.search(100))
+for j in comands:
+    j = j.split(" ")
+    if j[0] == 'SCH':
+        print(arvore.search(int(j[1])))
+    elif j[0] == "INS":
+        arvore.insertAndPrint(int(j[1]), j[1])
         # print((arvore.search(int(i[4::]))))
-    elif i[:3:] == "DEL":
-        print((arvore.search(int(i[4::]))))
-        arvore.remove(int(i[4::]))
+    elif j[0] == "DEL":
+        print((arvore.search(int(j[1]))))
+        arvore.remove(int(j[1]))
 
 # maior = 0
 # for i in aux:
