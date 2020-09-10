@@ -15,6 +15,36 @@ class BinarySearchTree:
     def __len__(self):
         return self.size
 
+    def insertAndPrint(self, key, value):
+        cont = True
+        no_current = self.root
+        no_before = None
+        depth = 1
+        if type(key) == int and type(value) == str:
+            while cont:
+                if no_current is None:
+                    print(1)
+                    self.root = No(key, value)
+                    self.size += 1
+                    cont = False
+                elif key < no_current.key:
+                    depth += 1
+                    no_before = no_current
+                    no_current = no_current.left
+                    if no_current is None:
+                        no_before.left = No(key, value)
+                        print(depth)
+                        self.size += 1
+                        cont = False
+                elif key >= no_current.key:
+                    depth += 1
+                    no_before = no_current
+                    no_current = no_current.right
+                    if no_current is None: 
+                        no_before.right = No(key, value)
+                        print(depth)
+                        self.size += 1
+                        cont = False
 
     def insert(self, key, value):
         cont = True
@@ -27,6 +57,7 @@ class BinarySearchTree:
                     self.size += 1
                     cont = False
                 elif key < no_current.key:
+
                     no_before = no_current
                     no_current = no_current.left
                     if no_current is None:
@@ -34,6 +65,7 @@ class BinarySearchTree:
                         self.size += 1
                         cont = False
                 elif key >= no_current.key:
+
                     no_before = no_current
                     no_current = no_current.right
                     if no_current is None: 
@@ -45,6 +77,8 @@ class BinarySearchTree:
         no = self.root
         depth = 0
         while no is not None:
+            if (no.key == key) and no == self.root:
+                return 1
             if no.key == key:
                 return depth
             elif no.key < key:
@@ -55,7 +89,7 @@ class BinarySearchTree:
                 depth += 1
         return -1
 
-
+ 
     def remove(self, key):
         
         key = int(key)
@@ -159,44 +193,66 @@ class BinarySearchTree:
                 no_current = no_current.left
             else:
                 no_current = no_current.right
-        return no_current.value
-
-
-'''
-inp = "460 10 0 120 90 30 20 40 70 50 60 80 100 110 140 130 190 180 170 150 160 220 210 200 380 270 260 230 250 240 310 280 300 290 350 330 320 340 360 370 440 390 400 420 410 430 450 580 550 500 470 480 490 540 520 510 530 570 560 980 850 780 720 700 600 590 670 620 610 650 640 630 660 680 690 710 730 740 770 750 760 810 790 800 820 830 840 970 860 920 890 870 880 900 910 950 930 940 960 990"
+        return no_current.key
 
 
 
+inp = ["", "46 10 2 12 90 91 45 100 56 87 85 14 21 22 23"] #30 20 40 128 374 253 128 34 451 194 448 919 527 451"]
 
-aux = inp[0].split(" ")
+comands = ['INS 128', 'INS 374', 'INS 253', 'INS 128', 'INS 34', 'INS 451', 'INS 194', 'INS 448', 'INS 919', 'INS 527', 'DEL 451']
 
-num = inp[0]
-lista = inp[2::]
+
+
+aux = inp[1].split(" ")
+
+lista = comands
 
 arvore = BinarySearchTree()
 
 for i in aux:
     arvore.insert(int(i), i)
 
-
 maior = 0
 for i in aux:
     num = arvore.search(int(i))
     if maior < num:
         maior = num
-print(maior)
+print(maior+1)
 
-for i in lista:
-    if i[:3:] == "SCH":
-        print((arvore.search(int(i[4::]))))
-    elif i[:3:] == "INS":
-        arvore.insert(int(i[4::]), i)
-        print((arvore.search(int(i[4::]))))
-    elif i[:3:] == "DEL":
-        arvore.remove(int(i[4::]))
-        print((arvore.search(int(i[4::]))))
-'''
+# arvore.remove(22)
+print(arvore.search(22))
+maior = 0
+for i in aux:
+    num = arvore.search(int(i))
+    if maior < num:
+        maior = num
+print(maior+1)
 
+
+
+# i = comands[3]
+# print((arvore.search(int(i[4::]))))
+
+# for i in lista:
+#     if i[:3:] == "SCH":
+#         print((arvore.search(int(i[4::]))))
+#     elif i[:3:] == "INS":
+#         arvore.insertAndPrint(int(i[4::]), i)
+#         # print((arvore.search(int(i[4::]))))
+#     elif i[:3:] == "DEL":
+#         print((arvore.search(int(i[4::]))))
+#         arvore.remove(int(i[4::]))
+
+
+# maior = 0
+# for i in aux:
+#     num = arvore.search(int(i))
+#     if maior < num:
+#         maior = num
+# print(maior+1)
+
+
+"""
 def main():
     inputs = []
     cont = True
@@ -227,18 +283,19 @@ def main():
         if i[:3:] == "SCH":
             print((arvore.search(int(i[4::]))))
         elif i[:3:] == "INS":
-            arvore.insert(int(i[4::]), i)
+            arvore.insertAndPrint(int(i[4::]), i)
             print((arvore.search(int(i[4::]))))
         elif i[:3:] == "DEL":
             print((arvore.search(int(i[4::]))))
             arvore.remove(int(i[4::]))
     
-    maior = 0
-    for i in aux:
-        num = arvore.search(int(i))
-        if maior < num:
-            maior = num
-    print(maior)
+    number = 0
+    for j in aux:
+        num = arvore.search(int(j))
+        if number < num:
+            number = num
+    print(number)
 
 if __name__ == '__main__':
     main()
+"""
