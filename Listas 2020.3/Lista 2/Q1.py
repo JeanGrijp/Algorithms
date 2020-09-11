@@ -238,13 +238,13 @@ comands = ['INS 128', 'INS 374', 'INS 253', 'INS 128', 'INS 34', 'INS 451', 'INS
 aux = inp[1].split(" ")
 arvore = BinarySearchTree()
 for i in aux:
-    print(i + "->")
-    arvore.insertAndPrint(int(i), i[4::])
+    # print(i + "->")
+    arvore.insert(int(i), i[4::])
 
 
+print(arvore.pre_ordem(arvore.root))
 
-
-print(arvore.height(arvore.root))
+# print(arvore.height(arvore.root))
 # print("%%%%%%%%%%%")
 
 # print(arvore.search(10))
