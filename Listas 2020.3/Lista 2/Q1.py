@@ -159,7 +159,7 @@ class BinarySearchTree:
 
     def search(self, key):
         no = self.root
-        depth = 1
+        depth = 0
         while no is not None:
             if (no.key == key) and no is self.root:
                 return 1
@@ -183,7 +183,45 @@ class BinarySearchTree:
             else:
                 return  1 + self.height(no.right) 
 
+    def pre_ordem(self, no):
+        if no is None:
+            return
+        a = "{}:'{}'".format(no.key, no.value)
+        b = self.pre_ordem(no.left)
+        c = self.pre_ordem(no.right)
+        final_string = a
+        if b != None:
+            final_string += "->" + str(b) 
+        if c != None:
+            final_string += "->" + str(c)
+        return final_string
 
+    def ordem(self, no):
+        if no is None:
+            return
+        b = self.ordem(no.left)
+        a = "{}:'{}'".format(no.key, no.value)
+        c = self.ordem(no.right)
+        final_string = a
+        if b != None:
+            final_string += "->" + str(b) 
+        if c != None:
+            final_string += "->" + str(c)
+        return final_string
+
+
+    def pos_ordem(self, no):
+        if no is None:
+            return
+        b = self.ordem(no.left)
+        c = self.ordem(no.right)
+        a = "{}:'{}'".format(no.key, no.value)
+        final_string = a
+        if b != None:
+            final_string += "->" + str(b) 
+        if c != None:
+            final_string += "->" + str(c)
+        return final_string
 
  
 
@@ -191,7 +229,9 @@ class BinarySearchTree:
 
 inp = ["", "46 101 10 2 90 220 148 30 20 40 128 374 253 128 34 451 194 448 919 527 451"]
 
-comands = ['INS 71', 'DEL 30', 'SCH 34']
+inp = ["", "640 550 220 210 170 130 110 60 40 20 10 0 30 50 100 90 70 80 120 160 140 150 200 190 180 230 480 290 240 280 270 260 250 440 390 380 340 330 310 300 320 350 360 370 420 410 400 430 450 470 460 490 510 500 540 530 520 630 600 560 590 580 570 610 620 700 680 650 670 660 690 840 710 830 750 740 730 720 820 770 760 790 780 810 800 850 900 890 880 860 870 940 930 910 920 960 950 970 980 990"]
+
+comands = ['INS 128', 'INS 374', 'INS 253', 'INS 128', 'INS 34', 'INS 451', 'INS 194', 'INS 448', 'INS 919', 'INS 527', 'INS 62', 'INS 541', 'INS 183', 'INS 458', 'INS 654', 'INS 321', 'INS 597', 'INS 5', 'INS 539', 'INS 641', 'INS 643', 'INS 167', 'INS 769', 'INS 689', 'INS 60', 'INS 280', 'INS 146', 'INS 706', 'INS 247', 'INS 981', 'INS 721', 'INS 243', 'INS 980', 'INS 33', 'INS 852', 'INS 887', 'INS 433', 'INS 904', 'INS 888', 'INS 587', 'INS 641', 'INS 180', 'INS 36', 'INS 333', 'INS 740', 'INS 417', 'INS 745', 'INS 755', 'INS 533', 'INS 308', 'INS 739', 'INS 423', 'INS 423', 'INS 44', 'INS 895', 'INS 208', 'INS 770', 'INS 819', 'INS 737', 'INS 743', 'INS 705', 'INS 631', 'INS 955', 'INS 822', 'INS 587', 'INS 717', 'INS 82', 'INS 299', 'INS 919', 'INS 635', 'INS 712', 'INS 737', 'INS 291', 'INS 404', 'INS 743', 'INS 287', 'INS 86', 'INS 275', 'INS 790', 'INS 737', 'INS 548', 'INS 663', 'INS 840', 'INS 560', 'INS 277', 'INS 650', 'INS 6', 'INS 136', 'INS 940', 'INS 431', 'INS 960', 'INS 343', 'INS 773', 'INS 308', 'INS 208', 'INS 914', 'INS 747', 'INS 481', 'INS 378', 'INS 976']
 
 
 
@@ -205,7 +245,7 @@ for i in aux:
 
 
 print(arvore.height(arvore.root))
-
+# print("%%%%%%%%%%%")
 
 # print(arvore.search(10))
 # arvore.remove(10)
@@ -227,8 +267,8 @@ for j in comands:
     elif j[0] == "DEL":
         print((arvore.search(int(j[1]))))
         arvore.remove(int(j[1]))
-print("######################################################")
-print("######################################################")
+# print("######################################################")
+# print("######################################################")
 print(arvore.height(arvore.root))
 
 
