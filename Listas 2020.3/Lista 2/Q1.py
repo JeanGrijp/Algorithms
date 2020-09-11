@@ -83,55 +83,7 @@ class BinarySearchTree:
                         cont = False
     
 
-    def remover(self, key):
-        self.root, value = self.__remover(self.root, key)
-        return value
-    
-    def __remover(self, no, key):
-        if no is None:
-            raise KeyError(key)
-        elif key > no.key:
-            no.right, value = self.__remover(no.right, key)
-        elif key < no.key:
-            no.left, value = self.__remover(no.left, key)
-        else:
-            value = no.value
-            if no.right is None:
-                aux = no
-                no = no.left
-                del aux
-            elif no.left is None:
-                aux = no
-                no = no.right
-                del aux
-            else:
-                no.right = self.__sucessor(no, no.right)
-        return no, value
-    
-    def __sucessor(self, no, nodo):
-        '''
-        Para promover um nó é necessário achar um entre os dois value possíveis
-        para a substituição: o nó imediatamente anterior ao nó que vai ser
-        substituído (antecessor) ou o imediatamente posterior (sucessor). Para
-        essa implementação eu escolhi fazer a substituição pelo sucessor, mas
-        a implementação com o antecessor pode ser vista nos slides do professor
-        Renato.
-        O antecessor é sempre o maior entre os menores (o mais a direita entre
-        os nós a esquerda do nó que será substituído) e o sucessor é o menor
-        entre os maiores (o mais a esquerda dos nós a direita).
-        '''
-        if nodo.left is not None:
-            nodo.left = self.__sucessor(no, nodo.left)
-        else:
-            aux = nodo
-            no.value = nodo.value
-            no.key = nodo.key
-            nodo = nodo.right
-            del aux
-        return nodo
-
-    
-    def remove___(self, key):
+    def remove(self, key):
         key = int(key)
         no_current = self.root
         no_before = None
@@ -222,19 +174,6 @@ class BinarySearchTree:
         return -1
 
 
-
-
-
-    def produndidade(self, no):
-        if no == None or no.left == None and no.right == None:
-            return 1
-        else:
-            if self.produndidade(no.left) > self.produndidade(no.right):
-                return  1 + self.produndidade(no.left) 
-            else:
-                return  1 + self.produndidade(no.right) 
-
-
     def height(self, no):
         if no == None or no.left == None and no.right == None:
             return 1
@@ -252,15 +191,15 @@ class BinarySearchTree:
 
 inp = ["", "46 101 10 2 90 220 148 30 20 40 128 374 253 128 34 451 194 448 919 527 451"]
 
-comands = ['INS 71', 'DEL 30', 'SCH 20']
+comands = ['INS 71', 'DEL 30', 'SCH 34']
 
 
 
 aux = inp[1].split(" ")
 arvore = BinarySearchTree()
 for i in aux:
-    # print(i + "->")
-    arvore.insert(int(i), i[4::])
+    print(i + "->")
+    arvore.insertAndPrint(int(i), i[4::])
 
 
 
@@ -268,8 +207,9 @@ for i in aux:
 print(arvore.height(arvore.root))
 
 
-print(arvore.search(101))
-arvore.remover(101)
+# print(arvore.search(10))
+# arvore.remove(10)
+# print(arvore.search(20))
 
 # print(arvore.height(arvore.root))
 
@@ -277,16 +217,16 @@ arvore.remover(101)
 # print(arvore.height(arvore.root))
 
 # print(arvore.search(100))
-# for j in comands:
-#     j = j.split(" ")
-#     if j[0] == 'SCH':
-#         print(arvore.search(int(j[1])))
-#     elif j[0] == "INS":
-#         arvore.insertAndPrint(int(j[1]), j[1])
-#         # print((arvore.search(int(i[4::]))))
-#     elif j[0] == "DEL":
-#         print((arvore.search(int(j[1]))))
-#         arvore.remove(int(j[1]))
+for j in comands:
+    j = j.split(" ")
+    if j[0] == 'SCH':
+        print(arvore.search(int(j[1])))
+    elif j[0] == "INS":
+        arvore.insertAndPrint(int(j[1]), j[1])
+        # print((arvore.search(int(i[4::]))))
+    elif j[0] == "DEL":
+        print((arvore.search(int(j[1]))))
+        arvore.remove(int(j[1]))
 print("######################################################")
 print("######################################################")
 print(arvore.height(arvore.root))
@@ -300,16 +240,8 @@ print(arvore.height(arvore.root))
 
 
 
-
-# maior = 0
-# for i in aux:
-#     num = arvore.search(int(i))
-#     if maior < num:
-#         maior = num
-# print(maior+1)
-
-
 """
+
 def main():
     inputs = []
     cont = True
@@ -328,7 +260,7 @@ def main():
     for i in aux:
         arvore.insert(int(i), i)
 
-    print(arvore.deepSearch())
+    print(arvore.height(arvore.root))
 
     for i in lista:
         if i[:3:] == "SCH":
@@ -340,7 +272,7 @@ def main():
             print((arvore.search(int(i[4::]))))
             arvore.remove(int(i[4::]))
     
-    print(arvore.deepSearch())
+    print(arvore.height(arvore.root))
 
 if __name__ == '__main__':
     main()
