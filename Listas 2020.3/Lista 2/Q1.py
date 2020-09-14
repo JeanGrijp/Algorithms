@@ -1,10 +1,11 @@
+import sys
+sys.setrecursionlimit(sys.getrecursionlimit())
 class No:
     def __init__(self, key, value, left=None, right=None):
         self.key = key
         self.value = value
         self.left = left
         self.right = right
-        self.depth = 0
     
     def __repr__(self):
         return int(self.key)
@@ -13,8 +14,6 @@ class No:
 class BinarySearchTree:
     def __init__(self):
         self.root = None
-        self.size = 0
-        self.depth = []
 
     def __len__(self):
         return self.size
@@ -29,7 +28,6 @@ class BinarySearchTree:
                 if no_current is None:
                     print(1)
                     self.root = No(key, value)
-                    self.size += 1
                     cont = False
                 elif key < no_current.key:
                     depth += 1
@@ -38,8 +36,6 @@ class BinarySearchTree:
                     if no_current is None:
                         no_before.left = No(key, value)
                         print(depth)
-                        self.depth.append(depth)
-                        self.size += 1
                         cont = False
                 elif key >= no_current.key:
                     depth += 1
@@ -48,8 +44,6 @@ class BinarySearchTree:
                     if no_current is None: 
                         no_before.right = No(key, value)
                         print(depth)
-                        self.depth.append(depth)
-                        self.size += 1
                         cont = False
 
     def insert(self, key, value):
@@ -61,7 +55,6 @@ class BinarySearchTree:
             while cont:
                 if no_current is None:
                     self.root = No(key, value)
-                    self.size += 1
                     cont = False
                 elif key < no_current.key:
                     depth += 1
@@ -69,8 +62,6 @@ class BinarySearchTree:
                     no_current = no_current.left
                     if no_current is None:
                         no_before.left = No(key, value)
-                        self.depth.append((key, depth))
-                        self.size += 1
                         cont = False
                 elif key >= no_current.key:
                     depth += 1
@@ -78,8 +69,6 @@ class BinarySearchTree:
                     no_current = no_current.right
                     if no_current is None: 
                         no_before.right = No(key, value)
-                        self.depth.append((key, depth))
-                        self.size += 1
                         cont = False
     
     def remover(self, key):
@@ -189,14 +178,16 @@ class BinarySearchTree:
                 no_current = no_current.left
             else:
                 no_current = no_current.right
-        # return no_current.key
+
 
     def search(self, key):
         no = self.root
         depth = 0
+        if self.root is None:
+            return 0
+        if (no.key == key) and no is self.root:
+            return 1
         while no is not None:
-            if (no.key == key) and no is self.root:
-                return 1
             if no.key == key:
                 return depth
             elif no.key < key:
@@ -257,88 +248,26 @@ class BinarySearchTree:
             final_string += "->" + str(c)
         return final_string
 
- 
-
-
-
-inp = ["", "640 550 220 210 170 130 110 60 40 20 10 0 30 50 100 90 70 80 120 160 140 150 200 190 180 230 480 290 240 280 270 260 250 440 390 380 340 330 310 300 320 350 360 370 420 410 400 430 450 470 460 490 510 500 540 530 520 630 600 560 590 580 570 610 620 700 680 650 670 660 690 840 710 830 750 740 730 720 820 770 760 790 780 810 800 850 900 890 880 860 870 940 930 910 920 960 950 970 980 990"]
-
-# inp = ["", "100 50 150 140 200 180 190"]
-
-
-comands = ['INS 128', 'INS 374', 'INS 253', 'INS 128', 'INS 34', 'INS 451', 'INS 194', 'INS 448', 'INS 919', 'INS 527', 'INS 62', 'INS 541', 'INS 183', 'INS 458', 'INS 654', 'INS 321', 'INS 597', 'INS 5', 'INS 539', 'INS 641', 'INS 643', 'INS 167', 'INS 769', 'INS 689', 'INS 60', 'INS 280', 'INS 146', 'INS 706', 'INS 247', 'INS 981', 'INS 721', 'INS 243', 'INS 980', 'INS 33', 'INS 852', 'INS 887', 'INS 433', 'INS 904', 'INS 888', 'INS 587', 'INS 641', 'INS 180', 'INS 36', 'INS 333', 'INS 740', 'INS 417', 'INS 745', 'INS 755', 'INS 533', 'INS 308', 'INS 739', 'INS 423', 'INS 423', 'INS 44', 'INS 895', 'INS 208', 'INS 770', 'INS 819', 'INS 737', 'INS 743', 'INS 705', 'INS 631', 'INS 955', 'INS 822', 'INS 587', 'INS 717', 'INS 82', 'INS 299', 'INS 919', 'INS 635', 'INS 712', 'INS 737', 'INS 291', 'INS 404', 'INS 743', 'INS 287', 'INS 86', 'INS 275', 'INS 790', 'INS 737', 'INS 548', 'INS 663', 'INS 840', 'INS 560', 'INS 277', 'INS 650', 'INS 6', 'INS 136', 'INS 940', 'INS 431', 'INS 960', 'INS 343', 'INS 773', 'INS 308', 'INS 208', 'INS 914', 'INS 747', 'INS 481', 'INS 378', 'INS 976']
-
-
-aux = inp[1].split(" ")
-arvore = BinarySearchTree()
-for i in aux:
-    print(i + "->")
-    arvore.insertAndPrint(int(i), i[4::])
-
-
-print("Altura inicial -> "+ str(arvore.height(arvore.root)))
-
-# print(arvore.height(arvore.root))
-
-print("####### Pré Ordem ########")
-print(arvore.pre_ordem(arvore.root))
-print("##########################")
-
-
-print("$$$$$$$$ Comands $$$$$$$$$$")
-for j in comands:
-    j = j.split(" ")
-    if j[0] == 'SCH':
-        print(arvore.search(int(j[1])))
-    elif j[0] == "INS":
-        arvore.insertAndPrint(int(j[1]), j[1])
-    elif j[0] == "DEL":
-        print((arvore.search(int(j[1]))))
-        arvore.remover(int(j[1]))
-print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
-print("####### Pré Ordem ########")
-print(arvore.pre_ordem(arvore.root))
-print("##########################")
-
-
-print("Altura final -> "+ str(arvore.height(arvore.root)))
-
-
-
-"""
 
 def main():
-    inputs = []
-    cont = True
-    try:
-        while cont:
-            inputs.append(input())
-    except:
-        pass
-    
-    num = inputs[0]
-    aux = inputs[1].split(" ")
-    lista = inputs[2::]
-
     arvore = BinarySearchTree()
-
-    for i in aux:
+    inp = int(input())
+    for i in input().split(" "):
         arvore.insert(int(i), i)
-
     print(arvore.height(arvore.root))
-
-    for i in lista:
-        if i[:3:] == "SCH":
-            print((arvore.search(int(i[4::]))))
-        elif i[:3:] == "INS":
-            arvore.insertAndPrint(int(i[4::]), i)
-            print((arvore.search(int(i[4::]))))
-        elif i[:3:] == "DEL":
-            print((arvore.search(int(i[4::]))))
-            arvore.remove(int(i[4::]))
-    
-    print(arvore.height(arvore.root))
+    cont = True
+    while cont:
+        inp = input()
+        if inp[:3:] == 'SCH':
+            print(arvore.search(int(inp[4::])))
+        elif inp[:3:] == "INS":
+            arvore.insertAndPrint(int(inp[4::]), inp[4::])
+        elif inp[:3:] == "DEL":
+            print((arvore.search(int(inp[4::]))))
+            arvore.remover(int(inp[4::]))
+        elif inp == "END":
+            print(arvore.height(arvore.root))
+            break
 
 if __name__ == '__main__':
     main()
-"""
