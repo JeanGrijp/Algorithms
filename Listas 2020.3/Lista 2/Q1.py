@@ -20,55 +20,52 @@ class BinarySearchTree:
 
     def insertAndPrint(self, key, value):
         cont = True
-        no_current = self.root
-        no_before = None
+        noAtual = self.root
+        noSentinela = None
         depth = 0
         if type(key) == int and type(value) == str:
             while cont:
-                if no_current is None:
-                    print(1)
+                if noAtual is None:
+                    print(0)
                     self.root = No(key, value)
                     cont = False
-                elif key < no_current.key:
+                elif key < noAtual.key:
                     depth += 1
-                    no_before = no_current
-                    no_current = no_current.left
-                    if no_current is None:
-                        no_before.left = No(key, value)
+                    noSentinela = noAtual
+                    noAtual = noAtual.left
+                    if noAtual is None:
+                        noSentinela.left = No(key, value)
                         print(depth)
                         cont = False
-                elif key >= no_current.key:
+                elif key >= noAtual.key:
                     depth += 1
-                    no_before = no_current
-                    no_current = no_current.right
-                    if no_current is None: 
-                        no_before.right = No(key, value)
+                    noSentinela = noAtual
+                    noAtual = noAtual.right
+                    if noAtual is None: 
+                        noSentinela.right = No(key, value)
                         print(depth)
                         cont = False
 
     def insert(self, key, value):
         cont = True
-        no_current = self.root
-        no_before = None
-        depth = 1
+        noAtual = self.root
+        noSentinela = None
         if type(key) == int and type(value) == str:
             while cont:
-                if no_current is None:
+                if noAtual is None:
                     self.root = No(key, value)
                     cont = False
-                elif key < no_current.key:
-                    depth += 1
-                    no_before = no_current
-                    no_current = no_current.left
-                    if no_current is None:
-                        no_before.left = No(key, value)
+                elif key < noAtual.key:
+                    noSentinela = noAtual
+                    noAtual = noAtual.left
+                    if noAtual is None:
+                        noSentinela.left = No(key, value)
                         cont = False
-                elif key >= no_current.key:
-                    depth += 1
-                    no_before = no_current
-                    no_current = no_current.right
-                    if no_current is None: 
-                        no_before.right = No(key, value)
+                elif key >= noAtual.key:
+                    noSentinela = noAtual
+                    noAtual = noAtual.right
+                    if noAtual is None: 
+                        noSentinela.right = No(key, value)
                         cont = False
     
     def remover(self, key):
@@ -94,6 +91,82 @@ class BinarySearchTree:
                 no.right = self.sucessor(no, no.right)
         return no
     
+
+
+
+    def remove(self, key):
+        if self.root is None:
+            return
+        no = self.root
+        noAtual = self.root
+        noSentinela = None
+        while noAtual is not None:
+            if noAtual.key < key:
+                noSentinela = noAtual
+                noAtual = noAtual.right
+            elif noAtual.key > key:
+                noSentinela = noAtual
+                noAtual = noAtual.left
+            elif noAtual.key == key:
+                if (noAtual.left is None) and (noAtual.right is None):
+                    if noSentinela is None:
+                        self.root = None
+                    elif noSentinela.left.key == noAtual.key:
+                        noSentinela.left = None
+                    elif noSentinela.right == noAtual.key:
+                        noSentinela.right = None
+                elif (noAtual.left is None and noAtual.right is not None) or (noAtual.left is not None and noAtual.right is None):
+                    if noSentinela is None:
+                        if noAtual.left is not None:
+                            self.root = noAtual.left
+                        else:
+                            self.root = noAtual.right
+                    else:
+                        if noAtual.left is not None:
+                            if noSentinela.left == noAtual:
+                                noSentinela.left = noAtual.left
+                            else:
+                                noSentinela.right = noAtual.left
+                        else:
+                            if noSentinela.left == noAtual:
+                                noSentinela.left = noAtual.right
+                            else:
+                                noSentinela.right = noAtual.right
+                
+
+                elif (noAtual.left is not None) and (noAtual.right is not None):
+                    terceiro = noAtual
+                    segundo = noAtual.right
+                    primeiro = noAtual.right.left               
+                    while primeiro is not None:
+                        terceiro = segundo
+                        segundo = primeiro
+                        primeiro = segundo.left
+                    if noSentinela is None:
+                        if self.root.right.key == segundo.key:
+                            segundo.left = self.root.left
+                        else:
+                            if terceiro.left.key == segundo.key:
+                                terceiro.left = None
+                            else:
+                                terceiro.right = None
+                            segundo.left = noAtual.left
+                            segundo.right = noAtual.right
+                        self.root = segundo
+                    else:
+                        if noSentinela.left.key == noAtual.key:
+                            noSentinela.left = segundo
+                        else:
+                            noSentinela.right = segundo
+                        if terceiro.left.key == segundo.key:
+                            terceiro.left = None
+                        else:
+                            terceiro.right = None
+                        segundo.left = noAtual.left
+                        segundo.right = noAtual.right
+                break 
+
+
     def sucessor(self, no, nodo):
         if nodo.left is not None:
             nodo.left = self.sucessor(no, nodo.left)
@@ -104,81 +177,6 @@ class BinarySearchTree:
             nodo = nodo.right
             del aux
         return nodo
-
-
-    def remove(self, key):
-        key = int(key)
-        no_current = self.root
-        no_before = None
-        while no_current is not None:
-            if no_current.key == key:
-                if no_current.left is None and no_current.right is None:
-                    if no_before is None:
-                        self.root = None
-                        self.size = 0
-                    else:
-                        if no_before.left == no_current:
-                            no_before.left = None
-                            self.size -= 1
-                        elif no_before.right == no_current:
-                            no_before.right = None
-                            self.size -= 1
-                elif (no_current.left is None and no_current.right is not None) or (no_current.left is not None and no_current.right is None):
-                    if no_before is None:
-                        if no_current.left is not None:
-                            self.root = no_current.left
-                            self.size -= 1
-                        else:
-                            self.root = no_current.right
-                            self.size -= 1
-                    else:
-                        if no_current.left is not None:
-                            if no_before.left == no_current:
-                                no_before.left = no_current.left
-                            else:
-                                no_before.right = no_current.left
-                        else:
-                            if no_before.left == no_current:
-                                no_before.left = no_current.right
-                            else:
-                                no_before.right = no_current.right
-                elif (no_current.left is not None) and (no_current.right is not None):
-                    menor_no_before = no_current
-                    menor_no = no_current.right
-                    proximo_menor = no_current.right.left               
-                    while proximo_menor is not None:
-                        menor_no_before = menor_no
-                        menor_no = proximo_menor
-                        proximo_menor = menor_no.left
-                    if no_before is None:
-                        if self.root.right.key == menor_no.key:
-                            menor_no.left = self.root.left
-                        else:
-                            if menor_no_before.left.key == menor_no.key:
-                                menor_no_before.left = None
-                            else:
-                                menor_no_before.right = None
-                            menor_no.left = no_current.left
-                            menor_no.right = no_current.right
-                        self.root = menor_no
-                    else:
-                        if no_before.left.key == no_current.key:
-                            no_before.left = menor_no
-                        else:
-                            no_before.right = menor_no
-                        if menor_no_before.left.key == menor_no.key:
-                            menor_no_before.left = None
-                        else:
-                            menor_no_before.right = None
-                        menor_no.left = no_current.left
-                        menor_no.right = no_current.right
-                break 
-            no_before = no_current
-            if key < no_current.key:
-                no_current = no_current.left
-            else:
-                no_current = no_current.right
-
 
     def search(self, key):
         no = self.root
@@ -249,25 +247,39 @@ class BinarySearchTree:
         return final_string
 
 
-def main():
-    arvore = BinarySearchTree()
-    inp = int(input())
-    for i in input().split(" "):
-        arvore.insert(int(i), i)
-    print(arvore.height(arvore.root))
-    cont = True
-    while cont:
-        inp = input()
-        if inp[:3:] == 'SCH':
-            print(arvore.search(int(inp[4::])))
-        elif inp[:3:] == "INS":
-            arvore.insertAndPrint(int(inp[4::]), inp[4::])
-        elif inp[:3:] == "DEL":
-            print((arvore.search(int(inp[4::]))))
-            arvore.remover(int(inp[4::]))
-        elif inp == "END":
-            print(arvore.height(arvore.root))
-            break
+tree = BinarySearchTree()
+a = "100 50 150 140 200 180 190 20 55 70 81"
+for i in a.split(" "):
+    print(i+"->")
+    tree.insertAndPrint(int(i), i)
 
-if __name__ == '__main__':
-    main()
+
+print(tree.pre_ordem(tree.root))
+
+tree.remove(150)
+# tree.pre_ordem(tree.root)
+# print(tree.search(190))
+print(tree.pre_ordem(tree.root))
+
+# def main():
+#     arvore = BinarySearchTree()
+#     inp = int(input())
+#     for i in input().split(" "):
+#         arvore.insert(int(i), i)
+#     print(arvore.height(arvore.root))
+#     cont = True
+#     while cont:
+#         inp = input()
+#         if inp[:3:] == 'SCH':
+#             print(arvore.search(int(inp[4::])))
+#         elif inp[:3:] == "INS":
+#             arvore.insertAndPrint(int(inp[4::]), inp[4::])
+#         elif inp[:3:] == "DEL":
+#             print((arvore.search(int(inp[4::]))))
+#             arvore.remove(int(inp[4::]))
+#         elif inp == "END":
+#             print(arvore.height(arvore.root))
+#             break
+
+# if __name__ == '__main__':
+#     main()

@@ -1,51 +1,213 @@
-inp = [100, "460 10 0 120 90 30 20 40 70 50 60 80 100 110 140 130 190 180 170 150 160 220 210 200 380 270 260 230 250 240 310 280 300 290 350 330 320 340 360 370 440 390 400 420 410 430 450 580 550 500 470 480 490 540 520 510 530 570 560 980 850 780 720 700 600 590 670 620 610 650 640 630 660 680 690 710 730 740 770 750 760 810 790 800 820 830 840 970 860 920 890 870 880 900 910 950 930 940 960 990"]
+raiz = "raiz"
+class Node:
+    def __init__(self, dados):
+        self.dados = dados
+        self.esquerda = None
+        self.direita = None
 
-comands = ['INS 128', 'INS 374', 'INS 253', 'INS 128', 'INS 34', 'INS 451', 'INS 194', 'INS 448', 'INS 919', 'INS 527', 'INS 62', 'INS 541', 'INS 183', 'INS 458', 'INS 654', 'INS 321', 'INS 597', 'INS 5', 'INS 539', 'INS 641', 'INS 643', 'INS 167', 'INS 769', 'INS 689', 'INS 60', 'INS 280', 'INS 146', 'INS 706', 'INS 247', 'INS 981', 'INS 721', 'INS 243', 'INS 980', 'INS 33', 'INS 852', 'INS 887', 'INS 433', 'INS 904', 'INS 888', 'INS 587', 'INS 641', 'INS 180', 'INS 36', 'INS 333', 'INS 740', 'INS 417', 'INS 745', 'INS 755', 'INS 533', 'INS 308', 'INS 739', 'INS 423', 'INS 423', 'INS 44', 'INS 895', 'INS 208', 'INS 770', 'INS 819', 'INS 737', 'INS 743', 'INS 705', 'INS 631', 'INS 955', 'INS 822', 'INS 587', 'INS 717', 'INS 82', 'INS 299', 'INS 919', 'INS 635', 'INS 712', 'INS 737', 'INS 291', 'INS 404', 'INS 743', 'INS 287', 'INS 86', 'INS 275', 'INS 790', 'INS 737', 'INS 548', 'INS 663', 'INS 840', 'INS 560', 'INS 277', 'INS 650', 'INS 6', 'INS 136', 'INS 940', 'INS 431', 'INS 960', 'INS 343', 'INS 773', 'INS 308', 'INS 208', 'INS 914', 'INS 747', 'INS 481', 'INS 378', 'INS 976', 'END']
+    def __str__(self):
+        return str(self.dados)
 
-
-    def remover(self, key):
-        self.root, value = self.__remover(self.root, key)
-        return value
-    
-    def __remover(self, no, key):
-        if no is None:
-            raise KeyError(key)
-        elif key > no.key:
-            no.right, value = self.__remover(no.right, key)
-        elif key < no.key:
-            no.left, value = self.__remover(no.left, key)
+class arvoreBinaria:
+    def __init__(self, dados=None, node=None):
+        if node:
+            self.raiz = node
+        elif dados:
+            node = Node(dados)
+            self.raiz = node
         else:
-            value = no.value
-            if no.right is None:
-                aux = no
-                no = no.left
-                del aux
-            elif no.left is None:
-                aux = no
-                no = no.right
-                del aux
+            self.raiz = None
+
+    # Percurso em ordem simétrica 
+    def simetric_traversal(self, node=None):
+        if node is None:
+            node = self.raiz
+        if node.esquerda:
+            print('(', end='') 
+            self.simetric_traversal(node.esquerda)
+        print(node, end='')
+        if node.direita:
+            self.simetric_traversal(node.direita)
+            print(')', end='')
+    
+    def altura(self, node=None):
+        if node is None:
+            node = self.raiz
+        hesquerda = 0
+        hdireita = 0
+        if node.esquerda:
+            hesquerda = self.altura(node.esquerda)
+        if node.direita:
+            hdireita = self.altura(node.direita)
+        if hdireita > hesquerda:
+            return hdireita + 1
+        return hesquerda + 1
+
+    # Percurso em PÓS ORDEM 
+    def posOrdem(self, node=None):
+        if node is None:
+            node = self.raiz
+        if node.esquerda:
+            self.posOrdem(node.esquerda)
+        if node.direita:
+            self.posOrdem(node.direita)
+        print(node)
+    
+
+    def emOrdem(self, node=None):
+        if node is None:
+            node = self.raiz
+        if node.esquerda:
+            self.emOrdem(node.esquerda)
+        print(node, end=' ')
+        if node.direita:
+            self.emOrdem(node.direita)
+    
+    def preOrdem(self, node=None):
+        if node is None:
+            node = self.raiz
+        print(node, end=' ')
+        if node.esquerda:
+            self.preOrdem(node.esquerda)
+        if node.direita:
+            self.preOrdem(node.direita)
+
+    '''# Percurso em Nível 
+ def levelorder_traversal(self, node=raiz):
+        if node == raiz:
+            node = self.raiz
+
+        queue = Queue()
+        queue.push(node)
+        while len(queue):
+            node = queue.pop()
+            if node.esquerda:
+                queue.push(node.esquerda)
+            if node.direita:
+                queue.push(node.direita)
+            print(node, end=" ")'''
+
+
+class BinarySearchTree(arvoreBinaria):
+    
+    def inserir(self, valor):
+        parent = None
+        x = self.raiz
+        cont = 0
+        while(x):
+            parent = x
+            if valor < x.dados:
+                x = x.esquerda
             else:
-                no.right = self.__sucessor(no, no.right)
-        return no, value
-    
-    def __sucessor(self, no, nodo):
-        '''
-        Para promover um nó é necessário achar um entre os dois value possíveis
-        para a substituição: o nó imediatamente anterior ao nó que vai ser
-        substituído (antecessor) ou o imediatamente posterior (sucessor). Para
-        essa implementação eu escolhi fazer a substituição pelo sucessor, mas
-        a implementação com o antecessor pode ser vista nos slides do professor
-        Renato.
-        O antecessor é sempre o maior entre os menores (o mais a direita entre
-        os nós a esquerda do nó que será substituído) e o sucessor é o menor
-        entre os maiores (o mais a esquerda dos nós a direita).
-        '''
-        if nodo.left is not None:
-            nodo.left = self.__sucessor(no, nodo.left)
+                x = x.direita
+            cont += 1
+        if parent is None:
+            self.raiz = Node(valor)
+        elif valor < parent.dados:
+            parent.esquerda = Node(valor)
         else:
-            aux = nodo
-            no.value = nodo.value
-            no.key = nodo.key
-            nodo = nodo.right
-            del aux
-        return nodo
+            parent.direita = Node(valor)
+        return cont 
+
+    def busca(self, valor):
+        return self._busca(valor, self.raiz)
+
+    def _busca(self, valor, node):
+        if node is None:
+            return -1
+        if node.dados == valor:
+            return 0
+        if valor < node.dados:
+            aux = self._busca(valor, node.esquerda)
+            return 1 + aux if aux >= 0 else aux
+        aux = self._busca(valor, node.direita)
+        return 1 + aux if aux >= 0 else aux
+
+    # # Encontrando o MAIOR e o MENOR elemento numa ÁRVORE Binária de Busca
+    def min(self, node=raiz):
+        if node == raiz:
+            node = self.raiz
+        while node.esquerda:
+            node = node.esquerda
+        return node.dados
+
+    def max(self, node=raiz):
+        if node == raiz:
+            node = self.raiz
+        while node.direita:
+            node = node.direita
+        return node.dados
+
+    # REMOVENDO da Árvore Binária de Busca
+    def remove(self, valor, node=raiz):
+        # Se for o valor padrão, executa a partir da raiz
+        if node == raiz:
+            node = self.raiz
+        # Se desceu até um ramo nulo, não há nada a fazer
+        if node is None:
+            return -1
+        # Se o valor for menor, desce à esquerda
+        if valor < node.dados:
+            node.esquerda = self.remove(valor, node.esquerda)
+        # Se o valor for maior, desce à direita
+        elif valor > node.dados:
+            node.direita = self.remove(valor, node.direita)
+        # Se não for nem menor, nem maior, encontramos! Vamos remover...
+        else:
+            if node.esquerda is None:
+                return node.direita
+            elif node.direita is None:
+                return node.esquerda
+            else:
+                # Substituto é o sucessor do valor a ser removido
+                substitute = self.min(node.direita)
+                # Ao invés de trocar a posição dos nós, troca o valor
+                node.dados = substitute
+                # Depois, remove o substituto da subárvore à direita
+                node.direita = self.remove(substitute, node.direita)
+
+        return node
+
+# tree =BinarySearchTree()         
+# inicio = input()
+# elemento = input().split()
+# print(tree.altura())
+# for x in elemento:
+#     tree.inserir(x)
+# comandos= input().split()
+# while comandos[0] != "FIM":
+#     if comandos[0] == "SCH":
+#         resultadoBusca = tree.busca(comandos[1])
+#         print(resultadoBusca)
+#     elif comandos[0] == "INS":
+#         print(tree.inserir(comandos[1]))
+#     elif comandos[0]== "DEL":
+#         pass
+#     comandos= input().split()
+
+a = "100 50 150 140 200 180 190 20 55 70 81"
+tree = BinarySearchTree()
+
+# # #     #tree.raiz.esquerda = Node(18)
+# # #     #tree.raiz.direita = Node(14)
+for i in a.split(" "):
+    tree.inserir(int(i))
+
+tree.preOrdem()
+print()
+print()
+tree.emOrdem()
+print()
+print()
+tree.posOrdem()
+print()
+print(tree.altura())
+# tree.remove(150)
+print(tree.busca(190))
+tree.preOrdem()
+print(tree.altura())
+
+
+# #print(tree.raiz)
+# #print(tree.raiz.direita)
+# #print(tree.raiz.esquerda)
