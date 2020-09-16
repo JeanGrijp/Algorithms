@@ -108,13 +108,18 @@ class BinarySearchTree:
                 noSentinela = noAtual
                 noAtual = noAtual.left
             elif noAtual.key == key:
+
+
                 if (noAtual.left is None) and (noAtual.right is None):
                     if noSentinela is None:
                         self.root = None
-                    elif noSentinela.left.key == noAtual.key:
+                    elif noSentinela.left == noAtual:
                         noSentinela.left = None
-                    elif noSentinela.right == noAtual.key:
+                    elif noSentinela.right == noAtual:
                         noSentinela.right = None
+
+
+
                 elif (noAtual.left is None and noAtual.right is not None) or (noAtual.left is not None and noAtual.right is None):
                     if noSentinela is None:
                         if noAtual.left is not None:
@@ -134,6 +139,7 @@ class BinarySearchTree:
                                 noSentinela.right = noAtual.right
                 
 
+
                 elif (noAtual.left is not None) and (noAtual.right is not None):
                     terceiro = noAtual
                     segundo = noAtual.right
@@ -143,7 +149,7 @@ class BinarySearchTree:
                         segundo = primeiro
                         primeiro = segundo.left
                     if noSentinela is None:
-                        if self.root.right.key == segundo.key:
+                        if self.root.right == segundo:
                             segundo.left = self.root.left
                         else:
                             if terceiro.left.key == segundo.key:
