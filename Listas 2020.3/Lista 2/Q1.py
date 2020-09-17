@@ -68,15 +68,15 @@ class BinarySearchTree:
                         cont = False
 
     def sucessor(self, no):
-        paidosucessor = no
+        paiDoSucessor = no
         sucessor = no
         atual = no.right
         while atual != None:
-            paidosucessor = sucessor
+            paiDoSucessor = sucessor
             sucessor = atual
             atual = atual.left
         if sucessor != no.right:
-            paidosucessor.left = sucessor.right
+            paiDoSucessor.left = sucessor.right
             sucessor.right = no.right
         return sucessor
 
@@ -130,10 +130,6 @@ class BinarySearchTree:
                 else:
                         pai.right = sucessor
             sucessor.left = atual.left
-
-
-
-
 
     def search(self, key):
         no = self.root
