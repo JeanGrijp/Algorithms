@@ -204,42 +204,27 @@ class BinarySearchTree:
         return final_string
 
 
-tree = BinarySearchTree()
-a = "100 50 150 140 200 180 190 20 55 70 81"
-for i in a.split(" "):
-    print(i+"->")
-    tree.insertAndPrint(int(i))
 
 
-print(tree.pre_ordem(tree.root))
+def main():
+    arvore = BinarySearchTree()
+    inp = int(input())
+    for i in input().split(" "):
+        arvore.insert(int(i))
+    print(arvore.height(arvore.root))
+    cont = True
+    while cont:
+        inp = input()
+        if inp[:3:] == 'SCH':
+            print(arvore.search(int(inp[4::])))
+        elif inp[:3:] == "INS":
+            arvore.insertAndPrint(int(inp[4::]))
+        elif inp[:3:] == "DEL":
+            print((arvore.search(int(inp[4::]))))
+            arvore.remover(int(inp[4::]))
+        elif inp == "END":
+            print(arvore.height(arvore.root))
+            break
 
-print(tree.search(190))
-
-tree.remover(150)
-print(tree.search(190))
-# tree.pre_ordem(tree.root)
-# print(tree.search(190))
-print(tree.pre_ordem(tree.root))
-
-# def main():
-#     arkeyore = BinarySearchTree()
-#     inp = int(input())
-#     for i in input().split(" "):
-#         arkeyore.insert(int(i), i)
-#     print(arkeyore.height(arkeyore.root))
-#     cont = True
-#     while cont:
-#         inp = input()
-#         if inp[:3:] == 'SCH':
-#             print(arkeyore.search(int(inp[4::])))
-#         elif inp[:3:] == "INS":
-#             arkeyore.insertAndPrint(int(inp[4::]), inp[4::])
-#         elif inp[:3:] == "DEL":
-#             print((arkeyore.search(int(inp[4::]))))
-#             arkeyore.remokeye(int(inp[4::]))
-#         elif inp == "END":
-#             print(arkeyore.height(arkeyore.root))
-#             break
-
-# if __name__ == '__main__':
-#     main()
+if __name__ == '__main__':
+    main()
