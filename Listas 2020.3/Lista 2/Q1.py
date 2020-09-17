@@ -1,9 +1,8 @@
-import sys
-sys.setrecursionlimit(sys.getrecursionlimit())
+# import sys
+# sys.setrecursionlimit(sys.getrecursionlimit())
 class No:
-    def __init__(self, key, value, left=None, right=None):
+    def __init__(self, key, left=None, right=None):
         self.key = key
-        self.value = value
         self.left = left
         self.right = right
     
@@ -18,23 +17,23 @@ class BinarySearchTree:
     def __len__(self):
         return self.size
 
-    def insertAndPrint(self, key, value):
+    def insertAndPrint(self, key):
         cont = True
         noAtual = self.root
         noSentinela = None
         depth = 0
-        if type(key) == int and type(value) == str:
+        if type(key) == int:
             while cont:
                 if noAtual is None:
                     print(0)
-                    self.root = No(key, value)
+                    self.root = No(key)
                     cont = False
                 elif key < noAtual.key:
                     depth += 1
                     noSentinela = noAtual
                     noAtual = noAtual.left
                     if noAtual is None:
-                        noSentinela.left = No(key, value)
+                        noSentinela.left = No(key)
                         print(depth)
                         cont = False
                 elif key >= noAtual.key:
@@ -42,30 +41,30 @@ class BinarySearchTree:
                     noSentinela = noAtual
                     noAtual = noAtual.right
                     if noAtual is None: 
-                        noSentinela.right = No(key, value)
+                        noSentinela.right = No(key)
                         print(depth)
                         cont = False
 
-    def insert(self, key, value):
+    def insert(self, key):
         cont = True
         noAtual = self.root
         noSentinela = None
-        if type(key) == int and type(value) == str:
+        if type(key) == int:
             while cont:
                 if noAtual is None:
-                    self.root = No(key, value)
+                    self.root = No(key)
                     cont = False
                 elif key < noAtual.key:
                     noSentinela = noAtual
                     noAtual = noAtual.left
                     if noAtual is None:
-                        noSentinela.left = No(key, value)
+                        noSentinela.left = No(key)
                         cont = False
                 elif key >= noAtual.key:
                     noSentinela = noAtual
                     noAtual = noAtual.right
                     if noAtual is None: 
-                        noSentinela.right = No(key, value)
+                        noSentinela.right = No(key)
                         cont = False
     
     def remover(self, key):
@@ -144,33 +143,27 @@ class BinarySearchTree:
                     terceiro = noAtual
                     segundo = noAtual.right
                     primeiro = noAtual.right.left               
+                    if noSentinela is None:
+                        if primeiro is not None:
+                            if (primeiro.left is not None):
+                                if primeiro.right is not None:
+
+                                segundo.left = primeiro.left
+                                primeiro.right = self.root.right
+                                primeiro.left = self.root.left
+                            elif (primeiro.right is not None):
+                                segundo.left = primeiro.right
+                                primeiro.right = self.root.right
+                                primeiro.left = self.root.left
+                            segundo.left = primeiro
+
+
+
                     while primeiro is not None:
                         terceiro = segundo
                         segundo = primeiro
-                        primeiro = segundo.left
-                    if noSentinela is None:
-                        if self.root.right == segundo:
-                            segundo.left = self.root.left
-                        else:
-                            if terceiro.left.key == segundo.key:
-                                terceiro.left = None
-                            else:
-                                terceiro.right = None
-                            segundo.left = noAtual.left
-                            segundo.right = noAtual.right
-                        self.root = segundo
-                    else:
-                        if noSentinela.left.key == noAtual.key:
-                            noSentinela.left = segundo
-                        else:
-                            noSentinela.right = segundo
-                        if terceiro.left.key == segundo.key:
-                            terceiro.left = None
-                        else:
-                            terceiro.right = None
-                        segundo.left = noAtual.left
-                        segundo.right = noAtual.right
-                break 
+                        primeiro = primeiro.left
+
 
 
     def sucessor(self, no, nodo):
@@ -178,7 +171,6 @@ class BinarySearchTree:
             nodo.left = self.sucessor(no, nodo.left)
         else:
             aux = nodo
-            no.value = nodo.value
             no.key = nodo.key
             nodo = nodo.right
             del aux
@@ -263,6 +255,7 @@ for i in a.split(" "):
 print(tree.pre_ordem(tree.root))
 
 tree.remove(150)
+print(tree.search(190))
 # tree.pre_ordem(tree.root)
 # print(tree.search(190))
 print(tree.pre_ordem(tree.root))
