@@ -259,6 +259,15 @@ class Tree:
         return noAtual.value
 
 
+    def height(self, no):
+        if no == None or no.left == None and no.right == None:
+            return 1
+        else:
+            if self.height(no.left) > self.height(no.right):
+                return  1 + self.height(no.left) 
+            else:
+                return  1 + self.height(no.right) 
+
     def nosucessor(self, apaga): # O parametro é a referencia para o No que deseja-se apagar
         paidosucessor = apaga
         sucessor = apaga

@@ -1,5 +1,10 @@
-# import sys
+import random
+import time
+import sys
+
 # sys.setrecursionlimit(sys.getrecursionlimit())
+
+
 class No:
     def __init__(self, key, left=None, right=None):
         self.key = key
@@ -149,15 +154,15 @@ class BinarySearchTree:
                 depth += 1
         return -1
 
+    def maximo(self, a, b):
+        if a > b:
+            return a
+        return b
 
     def height(self, no):
-        if no == None or no.left == None and no.right == None:
-            return 1
-        else:
-            if self.height(no.left) > self.height(no.right):
-                return  1 + self.height(no.left) 
-            else:
-                return  1 + self.height(no.right) 
+        if no is None:
+            return 0
+        return 1 + self.maximo(self.height(no.left), self.height(no.right))
 
     def pre_ordem(self, no):
         if no is None:
@@ -201,26 +206,66 @@ class BinarySearchTree:
 
 
 
+inp = ""
+for i in range(10000):
+    inp += str(random.randint(0, 10000))
 
-def main():
-    arvore = BinarySearchTree()
-    inp = int(input())
-    for i in input().split(" "):
-        arvore.insert(int(i))
-    print(arvore.height(arvore.root))
-    cont = True
-    while cont:
-        inp = input()
-        if inp[:3:] == 'SCH':
-            print(arvore.search(int(inp[4::])))
-        elif inp[:3:] == "INS":
-            arvore.insertAndPrint(int(inp[4::]))
-        elif inp[:3:] == "DEL":
-            print((arvore.search(int(inp[4::]))))
-            arvore.remover(int(inp[4::]))
-        elif inp == "END":
-            print(arvore.height(arvore.root))
-            break
+# print(inp)
+lista = ['INS', 'DEL', 'SCH']
+aux = []
+cont = 0
+while cont < 10000:
+    aux.append("{} {}".format(lista[random.randint(0, 2)], random.randint(0, 10000)))
+    cont += 1
+print(aux)
 
-if __name__ == '__main__':
-    main()
+tempo1 = time.time_ns()
+arvore = BinarySearchTree()
+
+for i in inp.split(" "):
+    arvore.insert(int(i))
+print(arvore.height(arvore.root))
+cont = True
+for j in aux:
+    if j[:3:] == 'SCH':
+        print(arvore.search(int(j[4::])))
+    elif j[:3:] == "INS":
+        arvore.insertAndPrint(int(j[4::]))
+    elif j[:3:] == "DEL":
+        print((arvore.search(int(j[4::]))))
+        arvore.remover(int(j[4::]))
+
+
+print(arvore.height(arvore.root))
+
+
+
+tempo2 = time.time_ns()
+tempo = (tempo2 - tempo1) / 1000000
+print("Tempo: %i ms"%tempo)
+
+
+
+
+# def main():
+#     arvore = BinarySearchTree()
+#     inp = int(input())
+#     for i in input().split(" "):
+#         arvore.insert(int(i))
+#     print(arvore.height(arvore.root))
+#     cont = True
+#     while cont:
+#         inp = input()
+#         if inp[:3:] == 'SCH':
+#             print(arvore.search(int(inp[4::])))
+#         elif inp[:3:] == "INS":
+#             arvore.insertAndPrint(int(inp[4::]))
+#         elif inp[:3:] == "DEL":
+#             print((arvore.search(int(inp[4::]))))
+#             arvore.remover(int(inp[4::]))
+#         elif inp == "END":
+#             print(arvore.height(arvore.root))
+#             break
+
+# if __name__ == '__main__':
+#     main()
