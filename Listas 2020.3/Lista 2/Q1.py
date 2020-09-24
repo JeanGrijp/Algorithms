@@ -72,69 +72,105 @@ class BinarySearchTree:
                         noSentinela.right = No(key)
                         cont = False
 
-    def sucessor(self, no):
-        paiDoSucessor = no
-        sucessor = no
-        atual = no.right
-        while atual != None:
-            paiDoSucessor = sucessor
-            sucessor = atual
-            atual = atual.left
-        if sucessor != no.right:
-            paiDoSucessor.left = sucessor.right
-            sucessor.right = no.right
-        return sucessor
-
     def remover(self, key):
-        if self.root == None:
-            return
-        atual = self.root
-        pai = self.root
-        filho_left = True
-        while atual.key != key:
-            pai = atual
-            if key < atual.key:
-                atual = atual.left
-                filho_left = True
-            else:
-                atual = atual.right 
-                filho_left = False
-            if atual == None:
-                return
-        if atual.left == None and atual.right == None:
-            if atual == self.root:
-                self.root = None
-            else:
-                if filho_left:
-                        pai.left.left =  None 
-                else:
-                        pai.right = None
-        elif atual.right == None:
-            if atual == self.root:
-                self.root = atual.left
-            else:
-                if filho_left:
-                        pai.left = atual.left
-                else:
-                        pai.right = atual.left
-        elif atual.left == None:
-            if atual == self.root:
-                self.root = atual.right
-            else:
-                if filho_left:
-                        pai.left = atual.right
-                else:
-                        pai.right = atual.right
+        self.root = self.removerRec(self.root, key)
+
+    def removerRec(self, no, key):
+        if no is None:
+            pass
+        elif key > no.key:
+            no.right = self.removerRec(no.right, key)
+        elif key < no.key:
+            no.left = self.removerRec(no.left, key)
         else:
-            sucessor = self.sucessor(atual)
-            if atual == self.root:
-                self.root = sucessor
+            if no.right is None:
+                aux = no
+                no = no.left
+                del aux
+            elif no.left is None:
+                aux = no
+                no = no.right
+                del aux
             else:
-                if filho_left:
-                        pai.left = sucessor
-                else:
-                        pai.right = sucessor
-            sucessor.left = atual.left
+                no.right = self.sucessor(no, no.right)
+        return no
+    
+    def sucessor(self, no, nodo):
+        if nodo.left is not None:
+            nodo.left = self.sucessor(no, nodo.left)
+        else:
+            aux = nodo
+            no.value = nodo.value
+            no.key = nodo.key
+            nodo = nodo.right
+            del aux
+        return nodo
+
+
+    # def sucessor(self, no):
+    #     if 
+    #     paiDoSucessor = no
+    #     sucessor = no
+    #     atual = no.right
+    #     while atual != None:
+    #         paiDoSucessor = sucessor
+    #         sucessor = atual
+    #         atual = atual.left
+    #     if sucessor != no.right:
+    #         paiDoSucessor.left = sucessor.right
+    #         sucessor.right = no.right
+    #     return sucessor
+
+    # def remover(self, key):
+    #     if self.root == None:
+    #         return
+    #     atual = self.root
+    #     pai = self.root
+    #     filho_left = True
+    #     while atual.key != key:
+    #         pai = atual
+    #         if key < atual.key:
+    #             atual = atual.left
+    #             filho_left = True
+    #         else:
+    #             atual = atual.right 
+    #             filho_left = False
+    #         if atual == None:
+    #             return
+    #     if atual.left == None and atual.right == None:
+    #         if atual == self.root:
+    #             self.root = None
+    #         else:
+    #             if filho_left:
+    #                     pai.left.left =  None 
+    #             else:
+    #                     pai.right = None
+    #     elif atual.right == None:
+    #         if atual == self.root:
+    #             self.root = atual.left
+    #         else:
+    #             if filho_left:
+    #                     pai.left = atual.left
+    #             else:
+    #                     pai.right = atual.left
+    #     elif atual.left == None:
+    #         if atual == self.root:
+    #             self.root = atual.right
+    #         else:
+    #             if filho_left:
+    #                     pai.left = atual.right
+    #             else:
+    #                     pai.right = atual.right
+    #     else:
+    #         sucessor = self.sucessor(atual)
+    #         if atual == self.root:
+    #             self.root = sucessor
+    #         else:
+    #             if filho_left:
+    #                     pai.left = sucessor
+    #             else:
+    #                     pai.right = sucessor
+    #         sucessor.left = atual.left
 
     def search(self, key):
         no = self.root

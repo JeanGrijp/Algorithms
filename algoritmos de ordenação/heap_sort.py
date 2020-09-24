@@ -1,3 +1,7 @@
+def maxHeapify(a, i):
+    l = None
+
+
 def heap_sort(data):
     print(x)
     tamanho = len(data)
@@ -29,9 +33,9 @@ def heap_sort(data):
         data[pai] = temp
 
 
-lista = []
-for i in range(10, 0, -1):
-    lista.append(i)
+lista = [2,5,4,9,6,3]
+# for i in range(10, 0, -1):
+#     lista.append(i)
 x = 2
 heap_sort(lista)
 
